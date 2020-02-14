@@ -6,7 +6,7 @@ const Actions = require('./actionModel.js')
 const router = express.Router();
 
 
-// GET actions
+// GET actions - get()
 router.get('/', (req, res) => {
   console.log(Actions);
   Actions.get().then(actions => {
@@ -16,6 +16,28 @@ router.get('/', (req, res) => {
     res.status(500).json({ message: "Error retrieving actions" });
   });
 });
+
+// POST - insert()
+router.post('/', (req, res) => {
+  const { project_id, description, notes } = req.body;
+
+  if (!actionData.description || !actionData.notes) {
+    res.status(400).json({ message: "Please provide a description and notes." });
+  } else if (!actionData.description.length > 128) {
+    res.status(400).json({ message: "Description must not exceed 128 characters." })
+  } else {
+    Actions.insert({ project_id, description, notes }).then(post => {
+      res.status(201).json(post);
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "There was an error saving the post to the database." })
+    });
+  };
+});
+
+// PUT - update()
+
+// DELETE - remove()
 
 
 module.exports = router;
