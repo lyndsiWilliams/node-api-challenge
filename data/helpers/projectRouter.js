@@ -8,7 +8,7 @@ const router = express.Router();
 
 // GET projects
 router.get('/', (req, res) => {
-  console.log(Projects)
+  console.log(Projects);
   Projects.get().then(projects => {
     res.status(200).json(projects);
   }).catch(err => {
