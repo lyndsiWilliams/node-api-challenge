@@ -18,6 +18,16 @@ router.get('/', (req, res) => {
 });
 
 // getProjectActions()
+router.get('/:id/actions', (req, res) => {
+  const id = req.params.id;
+
+  Projects.getProjectActions(id).then(actions => {
+    res.status(200).json(actions);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({ message: "Error retrieving actions" });
+  });
+});
 
 // POST - insert()
 router.post('/', (req, res) => {
