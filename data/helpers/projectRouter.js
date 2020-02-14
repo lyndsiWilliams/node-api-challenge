@@ -36,6 +36,23 @@ router.post('/', (req, res) => {
 });
 
 // PUT - update()
+router.put('/:id', (req, res) => {
+  const projectData = req.body;
+  const id = req.params.id;
+
+  if (!id) {
+    res.status(404).json({ message: "The project with the specified ID does not exist." });
+  } else if (!projectData.name || !projectData.description) {
+    res.status(400).json({ message: "Please provide a name and description for this post." })
+  } else {
+    Projects.update(id, projectData).then(post => {
+      res.status(200).json(post);
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({ message: "The post's information could not be retrieved." })
+    });
+  };
+});
 
 // DELETE - remove()
 
