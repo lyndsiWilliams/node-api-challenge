@@ -21,9 +21,9 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const { project_id, description, notes } = req.body;
 
-  if (!actionData.description || !actionData.notes) {
+  if (!description || !notes) {
     res.status(400).json({ message: "Please provide a description and notes." });
-  } else if (!actionData.description.length > 128) {
+  } else if (!description.length > 128) {
     res.status(400).json({ message: "Description must not exceed 128 characters." })
   } else {
     Actions.insert({ project_id, description, notes }).then(post => {
